@@ -4,6 +4,8 @@ pragma solidity ^0.8.30;
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Cert is Ownable {
+    event Issued(uint256 id, string date);
+
     constructor(address initialOwner) Ownable(initialOwner) {}
 
     struct Certificate {
@@ -15,8 +17,6 @@ contract Cert is Ownable {
 
     mapping(uint256 => Certificate) public Certificates;
 
-    event issued(uint256 cid, string cidate);
-
     function issue(
         uint256 _id,
         string memory _name,
@@ -25,6 +25,6 @@ contract Cert is Ownable {
         string memory _date
     ) public onlyOwner {
         Certificates[_id] = Certificate(_name, _course, _grade, _date);
-        emit issued(_id, _date);
+        emit Issued(_id, _date);
     }
 }
